@@ -1,0 +1,91 @@
+plugins {
+	id 'org.springframework.boot' version '2.5.8'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id "io.freefair.lombok" version "6.3.0"
+	id 'java'
+	//id 'war'
+}
+
+group = 'fr.gvs'
+version = '0.2.0'
+sourceCompatibility = '11'
+targetCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web:2.5.8'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.8'
+	implementation 'org.springframework.boot:spring-boot-starter-validation:2.5.8'
+	implementation 'org.springframework.boot:spring-boot-starter-security:2.5.8'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools:2.5.8'
+	// used for war
+	//providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat:2.5.8'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.8'
+
+	implementation 'io.springfox:springfox-swagger2:3.0.0'
+	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+
+	implementation 'org.apache.commons:commons-lang3:3.12.0'
+
+	runtimeOnly 'mysql:mysql-connector-java'
+
+	implementation 'org.flywaydb:flyway-core'
+	
+	testImplementation 'io.rest-assured:spring-mock-mvc:4.4.0'
+	testImplementation 'org.mockito:mockito-core:3.12.4'
+}
+
+test {
+	useJUnitPlatform()
+}
+
+// format test output // source from : https://stackoverflow.com/questions/3963708/gradle-how-to-display-test-results-in-the-console-in-real-time
+
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+
+tasks.withType(Test) {
+    testLogging {
+        // set options for log level LIFECYCLE
+        events TestLogEvent.FAILED,
+               TestLogEvent.PASSED,
+               TestLogEvent.SKIPPED,
+               TestLogEvent.STANDARD_OUT
+        exceptionFormat TestExceptionFormat.FULL
+        showExceptions true
+        showCauses true
+        showStackTraces true
+
+        // set options for log level DEBUG and INFO
+        debug {
+            events TestLogEvent.STARTED,
+                   TestLogEvent.FAILED,
+                   TestLogEvent.PASSED,
+                   TestLogEvent.SKIPPED,
+                   TestLogEvent.STANDARD_ERROR,
+                   TestLogEvent.STANDARD_OUT
+            exceptionFormat TestExceptionFormat.FULL
+        }
+        info.events = debug.events
+        info.exceptionFormat = debug.exceptionFormat
+
+        afterSuite { desc, result ->
+            if (!desc.parent) { // will match the outermost suite
+                def output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} passed, ${result.failedTestCount} failed, ${result.skippedTestCount} skipped)"
+                def startItem = '|  ', endItem = '  |'
+                def repeatLength = startItem.length() + output.length() + endItem.length()
+                println('\n' + ('-' * repeatLength) + '\n' + startItem + output + endItem + '\n' + ('-' * repeatLength))
+            }
+        }
+    }
+}
