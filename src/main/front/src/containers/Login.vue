@@ -18,10 +18,10 @@
             alt="Logo GVS"
             contain
             height="150"
-            src="../assets/pingouins.png"
+            src="../assets/logoGVS.jpg"
           />
           <v-card-title class="primary--text text-h4 justify-center">
-            Empereur
+            BASE
           </v-card-title>
           <ValidationObserver v-slot="{ invalid, handleSubmit }">
             <v-form @submit.prevent="handleSubmit(submit)">

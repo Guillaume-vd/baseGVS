@@ -11,7 +11,7 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title>
         <v-img
-          src="../assets/logo_header_footer.png"
+          src="../assets/logoGVS.jpg"
           alt="GVS"
           height="auto"
           width="247px"
@@ -35,7 +35,7 @@
         >
           <router-link :to="{ name: 'Home' }">
             <v-img
-              src="../assets/logo_header_footer.png"
+              src="../assets/logoGVS.jpg"
               alt="GVS"
               height="auto"
               width="247px"

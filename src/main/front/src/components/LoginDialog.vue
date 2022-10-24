@@ -9,10 +9,10 @@
         alt="Logo OCF"
         contain
         height="150"
-        src="../assets/pingouins.png"
+        src="../assets/logoGVS.jpg"
       />
       <v-card-title class="primary--text text-h4 justify-center">
-        Empereur
+        Base
       </v-card-title>
       <v-alert type="error">
         Vous avez été déconnecté
